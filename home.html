@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/base/color.css">
+    <link rel="stylesheet" href="styles/base/utilities.css">
+</head>
+<body>
+    <header>
+        <h1 class="auto fit-content"> Expense Tracker App</h1>
+    </header>
+
+    <main id="app" class="app flex column space-evenly">
+
+        <section id="budget" class="flex row">
+           <h2>Total Budget = </h2>
+           <p></p> 
+
+        </section>
+
+
+        <section id="transaction-form" class="transaction-form flex column space-between">
+            <h3>Add Transaction</h3>
+            <form id="add-transaction-form" class="add-transaction-form flex space-around">
+                <input type="text" id="description" placeholder="Description" />
+                <input type="number" id="amount" placeholder="Amount" />
+                <select id="type">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+                <button type="submit">Add Transaction</button>
+            </form>
+        </section>
+
+
+
+
+
+    </main>
+    
+    
+</body>
+</html>
