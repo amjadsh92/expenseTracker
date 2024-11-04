@@ -114,3 +114,7 @@ form input, form select, form button {
 .more-padding {
     padding-bottom: 5em;
 }
+
+h1{
+    font-family: monospace;
+}
