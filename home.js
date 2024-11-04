@@ -1,11 +1,13 @@
 
 const formButton = document.getElementById("form-button");
 const transactionList = document.getElementById("transactions-table-body");
-const budget = document.getElementById("budget");
+const budge = document.getElementById("budget");
 const filterCategory = document.getElementById("apply-filters");
 
 let expenses = [];
+let totalBudget = 0;
 var counter = 0;
+let deleted = false;
 
 
 formButton.addEventListener("click", (e) => {
@@ -22,7 +24,7 @@ formButton.addEventListener("click", (e) => {
     let expense = {
         id: counter ++,
         name,
-        amount,
+        amount: Number(amount),
         category,
         date
     };
@@ -30,6 +32,7 @@ formButton.addEventListener("click", (e) => {
 
     expenses.push(expense);
     showTransactions(expenses)
+    updateBudget(expense)
 
 });
 
@@ -37,8 +40,11 @@ transactionList.addEventListener("click", (e) => {
     
     if (e.target.classList.contains("delete-btn")) {
         const id = parseInt(e.target.dataset.id);
+        let expense = expenses.find(expense => expense.id === id);
         expenses = expenses.filter(expense => expense.id !== id);
+        deleted = true
         showTransactions(expenses);
+        updateBudget(expense)
         
     }
 
@@ -109,12 +115,64 @@ filterCategory.addEventListener("click",  (e) => {
     }
     
     showTransactions(filteredExpenses)
-   
+    updateBudget()
+    
+       
     
 
     })
 
 
+function updateBudget(expense){
 
+        if(deleted){
+
+            if(expense.category === 'income'){
+
+                totalBudget -= expense.amount
+            }
+            else if(expense.category === 'expense'){
+    
+                totalBudget += expense.amount;
+    
+    
+            }    
+
+
+        }
+
+        else{
+
+
+            if(expense.category === 'income'){
+
+                totalBudget += expense.amount
+                deleted = false
+            }
+            else if(expense.category === 'expense'){
+    
+                totalBudget -= expense.amount;
+                deleted  = false
+    
+    
+            }    
+        }
+    
+   
+
+        
+         
+        budge.innerHTML = totalBudget
+
+        } 
+        
+        
+    
+
+
+    
+        
+    
+    
 
 
