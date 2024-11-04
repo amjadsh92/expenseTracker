@@ -3,11 +3,14 @@ const formButton = document.getElementById("form-button");
 const transactionList = document.getElementById("transactions-table-body");
 const budge = document.getElementById("budget");
 const filterCategory = document.getElementById("apply-filters");
+const clearFilterButton = document.getElementById("clear-filters");
 
 let expenses = [];
+let filtered = [];
 let totalBudget = 0;
 var counter = 0;
 let deleted = false;
+
 
 
 formButton.addEventListener("click", (e) => {
@@ -94,7 +97,7 @@ function showTransactions(expenses) {
 filterCategory.addEventListener("click",  (e) => {
     
     e.preventDefault();
-    debugger;
+    
     const minAmount = document.getElementById("min-amount").value;
     const maxAmount= document.getElementById("max-amount").value;
     let filteredExpenses = []
@@ -115,12 +118,25 @@ filterCategory.addEventListener("click",  (e) => {
     }
     
     showTransactions(filteredExpenses)
-    updateBudget()
+    
     
        
     
 
     })
+
+
+ clearFilterButton.addEventListener("click", () => {
+  
+  
+  document.getElementById("min-amount").value = "";
+  document.getElementById("max-amount").value = "";
+  showTransactions(expenses)
+  
+
+
+
+ })   
 
 
 function updateBudget(expense){
@@ -130,10 +146,12 @@ function updateBudget(expense){
             if(expense.category === 'income'){
 
                 totalBudget -= expense.amount
+                deleted = false
             }
             else if(expense.category === 'expense'){
     
                 totalBudget += expense.amount;
+                deleted = false
     
     
             }    
