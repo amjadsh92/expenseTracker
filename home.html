@@ -15,15 +15,15 @@
 
     <main id="app" class="app flex column space-evenly">
 
-        <section  class="flex row">
+        <section  class="container flex row">
            <h3>Total Budget = </h3>
            <h3 id="budget"></h3> 
            <h3>$</h3>
 
         </section>
 
-
-        <section id="transaction-form" class="transaction-form flex column space-between">
+         
+        <section id="transaction-form" class=" container more-padding transaction-form flex column space-between">
             <h3>Add Transaction</h3>
             <form id="add-transaction-form" class="flex space-around">
                 <input type="text" id="description" placeholder="Description" />
@@ -39,14 +39,14 @@
 
 
 
-        <section id="filters" class="filters flex column space-between">
+        <section id="filters" class="container more-padding filters flex column space-between">
             <h3>Filters</h3>
             <div class="filter-section flex space-around">
                 <input type="number" id="min-amount" placeholder="Min Amount">
                 <input type="number" id="max-amount" placeholder="Max Amount">
                 <input type="date" id="date-filter" />
                 <select id="filter-type">
-                    
+                   
                     <option value="income" id="filter-income">Income</option>
                     <option value="expense" id="filter-expense">Expense</option>
                    

@@ -69,7 +69,7 @@ function showTransactions(expenses) {
             <td>${expense.amount}</td>
             <td>${expense.category}</td>
             <td>
-                <button class="edit-btn" data-id="${expense.id}">Edit</button>
+                
                 <button class="delete-btn" data-id="${expense.id}">Delete</button>
             </td>
         `;
@@ -116,6 +116,8 @@ filterCategory.addEventListener("click",  (e) => {
         filteredExpenses = filteredExpenses.filter( expense => expense.category == filterType);
       
       }
+
+    
 
 
 
