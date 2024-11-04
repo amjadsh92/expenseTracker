@@ -53,23 +53,7 @@ transactionList.addEventListener("click", (e) => {
         
     }
 
-    if (e.target.classList.contains("edit-btn")) {
-       
-        const id = parseInt(e.target.dataset.id);
-        let expense = expenses.find(expense => expense.id === id);
-        
-        const name = document.getElementById("description").value;
-        const amount = document.getElementById("amount").value;
-        const category = document.getElementById("type").value;
-        const date = document.getElementById("date").value;
-
-        
-
-        expense = {name, amount, category, date}
-       
-        showTransactions(expenses);
-        
-    }
+    
 });
 
 
@@ -102,22 +86,40 @@ filterCategory.addEventListener("click",  (e) => {
     
     const minAmount = document.getElementById("min-amount").value;
     const maxAmount= document.getElementById("max-amount").value;
-    let filteredExpenses = []
+    const filterDate = document.getElementById("date-filter").value;
+    const filterType  = document.getElementById("filter-type").value;
+    
+
+    let filteredExpenses = expenses
       
-    if (minAmount !== ""  && maxAmount === ""){
-        filteredExpenses = expenses.filter(expense => parseFloat(expense.amount) >= parseFloat(minAmount));
-            
+    //debugger
+
+    if(minAmount){
+        filteredExpenses = filteredExpenses.filter(expense => parseFloat(expense.amount) >= parseFloat(minAmount));
     }
 
-    if (maxAmount !== "" && minAmount === ""){
-        filteredExpenses = expenses.filter(expense => parseFloat(expense.amount) <= parseFloat(maxAmount));
-        
+    if(maxAmount){
+        filteredExpenses = filteredExpenses.filter(expense => parseFloat(expense.amount) <= parseFloat(maxAmount));
     }
 
-    if (maxAmount && minAmount ){
-        filteredExpenses = expenses.filter(expense => parseFloat(expense.amount) <= parseFloat(maxAmount) && parseFloat(expense.amount) >= parseFloat(minAmount));
-        
+    if (filterDate){
+
+
+      filteredExpenses = filteredExpenses.filter( expense => expense.date == filterDate );
+    
     }
+
+    
+    if (filterType){
+
+
+        filteredExpenses = filteredExpenses.filter( expense => expense.category == filterType);
+      
+      }
+
+
+
+   
     
     showTransactions(filteredExpenses)
     
@@ -220,7 +222,7 @@ function loadLocalStorage(){
 
 loadLocalStorage()
 showTransactions(expenses)
-debugger
+//debugger
 budge.innerHTML = totalBudget
 
 

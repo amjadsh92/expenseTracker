@@ -44,12 +44,14 @@
             <div class="filter-section flex space-around">
                 <input type="number" id="min-amount" placeholder="Min Amount">
                 <input type="number" id="max-amount" placeholder="Max Amount">
+                <input type="date" id="date-filter" />
                 <select id="filter-type">
-                    <option value="all">All</option>
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
-                    <option value="date">Date</option>
+                    
+                    <option value="income" id="filter-income">Income</option>
+                    <option value="expense" id="filter-expense">Expense</option>
+                   
                 </select>
+                
                 <button id="apply-filters">Apply Filters</button>
                 <button id="clear-filters">Clear Filters</button>
             </div>
