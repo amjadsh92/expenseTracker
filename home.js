@@ -36,6 +36,7 @@ formButton.addEventListener("click", (e) => {
     expenses.push(expense);
     showTransactions(expenses)
     updateBudget(expense)
+    updateLocalStorage()
 
 });
 
@@ -48,11 +49,12 @@ transactionList.addEventListener("click", (e) => {
         deleted = true
         showTransactions(expenses);
         updateBudget(expense)
+        updateLocalStorage()
         
     }
 
     if (e.target.classList.contains("edit-btn")) {
-        //debugger;
+       
         const id = parseInt(e.target.dataset.id);
         let expense = expenses.find(expense => expense.id === id);
         
@@ -61,7 +63,7 @@ transactionList.addEventListener("click", (e) => {
         const category = document.getElementById("type").value;
         const date = document.getElementById("date").value;
 
-        //expenses = expenses.filter(expense => expense.id !== id);
+        
 
         expense = {name, amount, category, date}
        
@@ -184,12 +186,46 @@ function updateBudget(expense){
 
         } 
         
+
+function updateLocalStorage(){
+
+
+    const data = {
+        expenses,
+        totalBudget,
+        counter
+
+    }
+
+    localStorage.setItem("savedTransactions", JSON.stringify(data))
+}        
         
     
 
-
     
-        
+function loadLocalStorage(){
+
+    let data = localStorage.getItem("savedTransactions")
+
+    if (!data){
+        return
+    }
+    data = JSON.parse(data)
+    expenses = data.expenses;
+    totalBudget = data.totalBudget;
+    counter = data.counter
+    
+
+};
+
+loadLocalStorage()
+showTransactions(expenses)
+debugger
+budge.innerHTML = totalBudget
+
+
+
+       
     
     
 
