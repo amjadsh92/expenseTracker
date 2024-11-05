@@ -1,11 +1,10 @@
-
 const formButton = document.getElementById("form-button");
 const transactionList = document.getElementById("transactions-table-body");
 const budge = document.getElementById("budget");
 const filterCategory = document.getElementById("apply-filters");
 const clearFilterButton = document.getElementById("clear-filters");
 
-let expenses = [];
+let transactions = [];
 let filtered = [];
 let totalBudget = 0;
 var counter = 0;
@@ -24,7 +23,7 @@ formButton.addEventListener("click", (e) => {
 
     
     
-    let expense = {
+    let transaction = {
         id: counter ++,
         name,
         amount: Number(amount),
@@ -33,9 +32,9 @@ formButton.addEventListener("click", (e) => {
     };
 
 
-    expenses.push(expense);
-    showTransactions(expenses)
-    updateBudget(expense)
+    transactions.push(transaction);
+    showTransactions(transactions)
+    updateBudget(transaction)
     updateLocalStorage()
 
 });
@@ -44,11 +43,11 @@ transactionList.addEventListener("click", (e) => {
     
     if (e.target.classList.contains("delete-btn")) {
         const id = parseInt(e.target.dataset.id);
-        let expense = expenses.find(expense => expense.id === id);
-        expenses = expenses.filter(expense => expense.id !== id);
+        let transaction = transactions.find(expense => expense.id === id);
+        transactions = transactions.filter(expense => expense.id !== id);
         deleted = true
-        showTransactions(expenses);
-        updateBudget(expense)
+        showTransactions(transactions);
+        updateBudget(transaction)
         updateLocalStorage()
         
     }
@@ -58,19 +57,19 @@ transactionList.addEventListener("click", (e) => {
 
 
 
-function showTransactions(expenses) {
+function showTransactions(transactions) {
     transactionList.innerHTML = "";
-    expenses.forEach(expense => {
+    transactions.forEach(transaction => {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${expense.date}</td>
-            <td>${expense.name}</td>
-            <td>${expense.amount}</td>
-            <td>${expense.category}</td>
+            <td>${transaction.date}</td>
+            <td>${transaction.name}</td>
+            <td>${transaction.amount}</td>
+            <td>${transaction.category}</td>
             <td>
                 
-                <button class="delete-btn" data-id="${expense.id}">Delete</button>
+                <button class="delete-btn" data-id="${transaction.id}">Delete</button>
             </td>
         `;
 
@@ -90,22 +89,22 @@ filterCategory.addEventListener("click",  (e) => {
     const filterType  = document.getElementById("filter-type").value;
     
 
-    let filteredExpenses = expenses
+    let filteredTransactions = transactions
       
-    //debugger
+    
 
     if(minAmount){
-        filteredExpenses = filteredExpenses.filter(expense => parseFloat(expense.amount) >= parseFloat(minAmount));
+        filteredTransactions = filteredTransactions.filter(transaction => parseFloat(transaction.amount) >= parseFloat(minAmount));
     }
 
     if(maxAmount){
-        filteredExpenses = filteredExpenses.filter(expense => parseFloat(expense.amount) <= parseFloat(maxAmount));
+        filteredTransactions = filteredTransactions.filter(transaction => parseFloat(transaction.amount) <= parseFloat(maxAmount));
     }
 
     if (filterDate){
 
 
-      filteredExpenses = filteredExpenses.filter( expense => expense.date == filterDate );
+      filteredTransactions = filteredTransactions.filter( transaction => transaction.date == filterDate );
     
     }
 
@@ -113,7 +112,7 @@ filterCategory.addEventListener("click",  (e) => {
     if (filterType){
 
 
-        filteredExpenses = filteredExpenses.filter( expense => expense.category == filterType);
+        filteredTransactions = filteredTransactions.filter( transaction => transaction.category == filterType);
       
       }
 
@@ -123,7 +122,7 @@ filterCategory.addEventListener("click",  (e) => {
 
    
     
-    showTransactions(filteredExpenses)
+    showTransactions(filteredTransactions)
     
     
        
@@ -137,7 +136,7 @@ filterCategory.addEventListener("click",  (e) => {
   
   document.getElementById("min-amount").value = "";
   document.getElementById("max-amount").value = "";
-  showTransactions(expenses)
+  showTransactions(transactions)
   
 
 
@@ -145,18 +144,18 @@ filterCategory.addEventListener("click",  (e) => {
  })   
 
 
-function updateBudget(expense){
+function updateBudget(transaction){
 
         if(deleted){
 
-            if(expense.category === 'income'){
+            if(transaction.category === 'income'){
 
-                totalBudget -= expense.amount
+                totalBudget -= transaction.amount
                 deleted = false
             }
-            else if(expense.category === 'expense'){
+            else if(transaction.category === 'expense'){
     
-                totalBudget += expense.amount;
+                totalBudget += transaction.amount;
                 deleted = false
     
     
@@ -168,14 +167,14 @@ function updateBudget(expense){
         else{
 
 
-            if(expense.category === 'income'){
+            if(transaction.category === 'income'){
 
-                totalBudget += expense.amount
+                totalBudget += transaction.amount
                 deleted = false
             }
-            else if(expense.category === 'expense'){
+            else if(transaction.category === 'expense'){
     
-                totalBudget -= expense.amount;
+                totalBudget -= transaction.amount;
                 deleted  = false
     
     
@@ -195,7 +194,7 @@ function updateLocalStorage(){
 
 
     const data = {
-        expenses,
+        transaction: transactions,
         totalBudget,
         counter
 
@@ -215,7 +214,7 @@ function loadLocalStorage(){
         return
     }
     data = JSON.parse(data)
-    expenses = data.expenses;
+    transactions = data.transactions;
     totalBudget = data.totalBudget;
     counter = data.counter
     
@@ -223,8 +222,8 @@ function loadLocalStorage(){
 };
 
 loadLocalStorage()
-showTransactions(expenses)
-//debugger
+showTransactions(transactions)
+
 budge.innerHTML = totalBudget
 
 
